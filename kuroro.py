@@ -3,7 +3,7 @@ from colorama import Fore, Style
 import time
 import os
 from datetime import datetime
-import sys  # import sys module
+import sys
 
 headers = {
     'Accept': '*/*',
@@ -22,12 +22,40 @@ headers = {
 def print_welcome_message():
     print(r"""      
 
-▒█▀▀▀█ █▀▀█ ░█▀█░ ▒█▄░▒█ 
-░▀▀▀▄▄ ░░▀▄ █▄▄█▄ ▒█▒█▒█ 
-▒█▄▄▄█ █▄▄█ ░░░█░ ▒█░░▀█
+&&&&&&&&&&&&&&&&&&&@@@@@@%#############%%%#%%#####################%&%%%%%%%%%%%%
+&@@@&&&&&&&&&&&&&&@@@@@@@%%######%%%%%%%%###%%%&%##################%%%%%%%%%%%%&
+@@@@&&&&&&&&&&&&&&&@@@@@@%###%%&%%%%%%%%%%##%%%%%&&&&###%###########%&%%%%%%%%%&
+&&&&&&&&&&&&&&&&&@@@@@@@@%#%&%&%%%%%%%%%%%#%%%&&&&&&&&&%############%%%%%%%%%%%&
+&&&&&&&&&&&&&&&&&@@@@@@@@%&&&&&&%%%&&&%%%%#%%&&&&&&&&&&&&############%%%%%%%%%%&
+&&&&&&&&&&&&&&&&&&@@@@@@@&&&&&&&&&&&&&&&%%%%&&&&&&&&&&&&&&%%##########%#%%%%%%%%
+@@&&&&&&&&&&&&&&&&@@@@@@@&&&&&&&&&&&&&&&%%%%&&&&&&&&&&&&&&&@@@@&@@@@@&&&&&%%%%%%
+&&&&@&&&&&&&&&&&&&&@@@@@&&&&&&&&&&&&&&&&%%%%%&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@&
+&&&&&&&&&&&&&&&&@%%&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&@@@@@@@@@@@@@@@@@@@@&
+&&&&&&&&&&&&&&&&%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%%@@@@@@@@@@@@@@@@@@@@&
+&&&&&&&&&&&&&&&%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@
+&&&&&&&&&&&&&&%%@@@@@@@@&&@@&&@@@@@@@@@@@@@@&@@&%@@@@@@@@@%%&@@@@@@@@@@@@@@@@@@@
+&&&&&&&&&&&&&&%#&@@@*         &&& .(&@@&,          (##/@@@&%%@@@@@@@@@@@@@@@@@@@
+&&&&&&&&&&&&&&%#%&@@.         ,,,    (@*           #%&  .@%%%@@@@&&&&&&&&&&&&&&&
+&%%&@&&&&&&&&&%%#%&&@               .@&@                @&%%&@@@@&&&&&@@@&&&%&&@
+@@&&&@&&&&&%&&&%%#&&&&%           .@@@@&&/            *@&(%&@@@@&&&&&@&@@&&&&&&&
+&&@@&&&&&&&&&&&&&%#(%%%&%&#/,,/#&@@@@@@@@@@&%*.  .,#@&&(&%&@@@@@&&&&@@@&&&&&&&&&
+&@@&&&%&&&%&&&&&&@&&%%&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&@@@@&&&@@@@&&&&&&&&&&
+&&@@&&&&@@&&&@@&&&&@@@@@&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&@&&&@@@@&&&@@@@@@&&&&&&&&
+@&&&&%&&@&&&&&&&&&@@@@@@&%%&&&&&&&&&&&&&&&&&&&&&&@@&&&&&&&&@@@&&&&&@&&&&&@&&&&&&
+@@@&@@@@@@&&&&&&&&&@@@@@#(%%###%###%%%%&%%%%%%&%%%%%%%%#*&&@@@&@@@@@@@@@@&&@@@@&
+@@&&@@@@@@@@&&@&&@@@@@@@/**&###%%######%###%#%&%#%%#%%%%,/&@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@&&@&@@@@@@@@@*.     .       .      .         .,&@@@@@@@@@@@@@@@@@@@@@
+%%%%&&&&%%%%%#%%%%%%%%%%/,     .                        .*&@@@@@@@@@@@@@@@@@@@@@
+##########%%%%&&&&%%###%(#%%%%##*,.   ..     .*..,,(&%%%*#&&&&&%#%@@@@@@@@@@@@@@
+##################%#%%%%%%&%%%#&#%%#%%%##%%%%#%%%%%%%%&%(&%#%%#%%@@@@@&%#(%@@@@@
+########################&&%%&&%&&%%%%%&%%%%%%%&%%&&&&%%&&&%&%%%%&@%&@%%%%%%%%%##
+#####################%%%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&%%%%%%&&@%##%%########
+#################%#%&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&%%%%%%%%%%%%%%%%&&&&&&
+################%&&&&&&&&&@@@&&&&&&&&&&&%%&&&&&&&@@@@@@@@&%%####################
+############(#%%%%%%%&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@&&##%#####################
+############################%%%%%%%%%%%%%%%%%%%%%#%%%####(######################
           """)
     print(Fore.GREEN + Style.BRIGHT + "Kuroro BOT")
-    print(Fore.RED + Style.BRIGHT + "Jangan di edit la bang :)\n\n")
 
 def update_upgrade(bearer_token, upgrade_id):
     url = 'https://ranch-api.kuroro.com/api/Upgrades/BuyUpgrade'
@@ -38,10 +66,10 @@ def update_upgrade(bearer_token, upgrade_id):
     try:
         response = requests.post(url, headers=headers, json=payload)
         response.raise_for_status()
-        print(Fore.GREEN + f"Upgrade {upgrade_id} berhasil.")
+        print(Fore.GREEN + f"Upgrade {upgrade_id} successful.")
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(Fore.RED + f"Upgrade {upgrade_id} gagal.")
+        print(Fore.RED + f"Upgrade {upgrade_id} failed.")
         return None
 
 def perform_action(url, action_name, payload, bearer_token):
@@ -62,7 +90,7 @@ def query_upgrades(file_path):
                 if upgrade_id:
                     upgrades.append(upgrade_id)
     except FileNotFoundError:
-        print(Fore.RED + f"File {file_path} tidak ditemukan.")
+        print(Fore.RED + f"File {file_path} not found.")
     return upgrades
 
 def clear_screen():
@@ -70,9 +98,8 @@ def clear_screen():
 
 def checkin(bearer_token):
     url = "https://ranch-api.kuroro.com/api/DailyStreak/ClaimDailyBonus"
-    headers['Authorization'] = bearer_token  # Menetapkan nilai Authorization dari bearer_token
+    headers['Authorization'] = bearer_token
     
-    # Mendapatkan tanggal saat ini dalam format yang diinginkan
     current_date = datetime.now().strftime("%Y-%m-%d")
 
     payload = {
@@ -81,7 +108,7 @@ def checkin(bearer_token):
 
     try:
         response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+        response.raise_for_status()
         print(Fore.GREEN + f"Daily bonus claimed successfully!")
     except requests.exceptions.RequestException as e:
         print(f"Failed to claim daily bonus: {e}")
@@ -95,68 +122,84 @@ def read_bearer_tokens(file_path):
                 if token:
                     tokens.append(token)
     except FileNotFoundError:
-        print(Fore.RED + f"File {file_path} tidak ditemukan.")
+        print(Fore.RED + f"File {file_path} not found.")
     return tokens
 
 def animate_loading():
     chars = ["|", "/", "-", "\\"]
     for _ in range(20):
-        sys.stdout.write("\r" + chars[_ % len(chars)] + " Tungguan sakedeng...")
+        sys.stdout.write("\r" + chars[_ % len(chars)] + " Please wait...")
         sys.stdout.flush()
         time.sleep(0.1)
-    sys.stdout.write("\r" + " " * 15 + "\r")  # Menghapus loading setelah selesai
+    sys.stdout.write("\r" + " " * 15 + "\r")
+
+def waiting_message_lagged():
+    message = Fore.CYAN + Style.BRIGHT + """
+@@%%%%@@@@#%####*#%%#*****#####
+@@%%%%@@@@%%%%%##%%%%%******###
+@@@%%%%@@%%%%%%##%%%%%%@@@@@@@%
+%%%%%%#%@@@%%%%%%%%###%@@@@@@@%
+%%%%%%@@@@@%@@@@@@@@@@#@@@@@@@@
+%%%%%#%@...=%.@.....@#%%@@@@@@@
+#%%%%#*%......@:.....:*@@%%@%#%
+%@%%@%#*%%..@@@@%...%+#@@%@%%%%
+%@%@%@@%@%%%%%%%%%%%%%%@%@@@%%%
+@%@%%%@@@*##########%+%@%%%%@%%
+@@@@%%@@@:..-=##***:-.%@@@@@@@@
+#####*###=:.........::%#@@@@@@@
+********##%#*#######%*%##%%@#*@
+********#%%%%%%%%%%%%%###@#*#**
+******%%%%@@%%%#%%%@@@#********
+***********#########***********
+   30 𝑚𝑖𝑛𝑠 𝐿𝑎𝑔𝑔𝑒𝑑 𝑟𝑛
+    
+    """ + Style.RESET_ALL
+    sys.stdout.write(message)
+    sys.stdout.flush()
+
 
 def main():
     print_welcome_message()
     
-    tokens = read_bearer_tokens('bearer.txt')
-    
-    if not tokens:
-        print(Fore.RED + "Tidak ada token bearer yang ditemukan.")
-        return
-    
-    upgrades_file = 'upgrades.txt'
-    upgrades = query_upgrades(upgrades_file)
-    
-    if not upgrades:
-        print(Fore.RED + f"Tidak ada upgrade yang ditemukan di {upgrades_file}.")
-        return
-    
-    for i, bearer_token in enumerate(tokens, start=1):
-        print(f"### Proses untuk Akun {i} ###")
+    while True:
+        tokens = read_bearer_tokens('bearer.txt')
         
-        # Konfirmasi sebelum melakukan upgrade otomatis
-        confirmation = input(Fore.BLACK + f"Apakah Anda ingin melakukan upgrade otomatis ? (y/n) : ").strip().lower()
+        if not tokens:
+            print(Fore.RED + "No bearer tokens found.")
+            break
         
-        if confirmation == 'y':
+        upgrades_file = 'upgrades.txt'
+        upgrades = query_upgrades(upgrades_file)
+        
+        if not upgrades:
+            print(Fore.RED + f"No upgrades found in {upgrades_file}.")
+            break
+        
+        for i, bearer_token in enumerate(tokens, start=1):
+            print(f"### Processing Account {i} ###")
+            
             for upgrade_id in upgrades:
                 result = update_upgrade(bearer_token, upgrade_id)
                 if not result:
                     continue
-                time.sleep(2)  # Delay 2 detik setiap kali melakukan upgrade
-                clear_screen()  # Membersihkan layar setelah upgrade
+                time.sleep(2)
+                clear_screen()
                 print_welcome_message()
+            
+            perform_action("https://ranch-api.kuroro.com/api/Clicks/MiningAndFeeding", "Mining", {"mineAmount": 100, "feedAmount": 0}, bearer_token)
+            perform_action("https://ranch-api.kuroro.com/api/Clicks/MiningAndFeeding", "Feeding", {"mineAmount": 0, "feedAmount": 10}, bearer_token)
+            print(Fore.YELLOW + "Mining and Feeding completed.")
+            
+            checkin(bearer_token)
+            
+            print(Fore.BLUE + f"Account {i} completed, moving to the next account")
+            animate_loading()
+            
+            time.sleep(5)
         
-        # Setelah selesai upgrade, tawarkan untuk melakukan Mining dan Feeding
-        choice = input(Fore.BLACK + f"Apakah Anda ingin melakukan Mining dan Feeding secara otomatis ? (y/n) : ").strip().lower()
-        if choice == 'y':
-            perform_action("https://ranch-api.kuroro.com/api/Clicks/MiningAndFeeding", "Mining ", {"mineAmount": 100, "feedAmount": 0}, bearer_token)
-            perform_action("https://ranch-api.kuroro.com/api/Clicks/MiningAndFeeding", "Feeding ", {"mineAmount": 0, "feedAmount": 10}, bearer_token)
-            print(Fore.YELLOW + "Mining dan Feeding selesai.")
-        elif choice == 'n':
-            print(Fore.YELLOW + "Pilihan untuk Mining dan Feeding secara otomatis tidak dilakukan.")
-        
-        # Klaim bonus harian setelah semua operasi selesai
-        checkin(bearer_token)
-        
-        # Menampilkan pesan akun selesai dan animasi
-        print(Fore.BLUE + f"Akun {i} selesai, Lanjut ke akun selanjutnya")
-        animate_loading()
-        
-        # Delay sebelum melanjutkan ke akun berikutnya
-        time.sleep(5)  # Delay 5 detik sebelum lanjut ke akun selanjutnya
-    
-    print(Fore.BLUE + "Seluruh proses selesai.")
+        print(Fore.BLUE + "All processes completed.")
+        waiting_message_lagged()
+        time.sleep(1800)  # Sleep for 30 minutes before starting the loop again
 
 if __name__ == "__main__":
     main()
